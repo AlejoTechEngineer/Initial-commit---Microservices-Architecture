@@ -3,6 +3,7 @@ import requests
 import os
 from datetime import datetime
 
+
 app = Flask(__name__)
 
 # Configuración de URLs de microservicios
@@ -112,6 +113,22 @@ def order_detail(order_id):
             'error': 'Order service unavailable',
             'message': str(e)
         }), 503
+
+@app.route('/api/orders/<order_id>/status', methods=['PUT'])
+def order_status(order_id):
+    """Proxy para actualizar estado del pedido"""
+    try:
+        response = requests.put(
+            f'{ORDER_SERVICE}/orders/{order_id}/status',
+            json=request.json
+        )
+        return jsonify(response.json()), response.status_code
+    except requests.exceptions.RequestException as e:
+        return jsonify({
+            'error': 'Order service unavailable',
+            'message': str(e)
+        }), 503
+
 
 # ========== PAYMENT SERVICE ROUTES ==========
 

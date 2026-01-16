@@ -110,7 +110,7 @@ services:
     volumes:
       - mongodb-data:/data/db
     ports:
-      - "27017:27017"
+      - "27018:27017"
     networks:
       - microservices-network
     restart: unless-stopped

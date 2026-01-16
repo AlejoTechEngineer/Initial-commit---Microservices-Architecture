@@ -12,17 +12,20 @@ MONGODB_URL = os.getenv('MONGODB_URL', 'mongodb://localhost:27017/orderdb')
 def get_db():
     """Conexión a MongoDB"""
     try:
-        client = MongoClient(MONGODB_URL)
-        db = client.get_database()
-        return db
+        client = MongoClient(MONGODB_URL, serverSelectionTimeoutMS=2000)
+        # fuerza conexión real (si no hay mongo, explota aquí)
+        client.admin.command("ping")
+        # selecciona DB explícita
+        return client["orderdb"]
     except Exception as e:
         print(f"Error connecting to MongoDB: {e}")
         return None
 
+
 def init_db():
     """Inicializar colección de pedidos"""
     db = get_db()
-    if db:
+    if db is not None:
         try:
             # Crear colección si no existe
             if 'orders' not in db.list_collection_names():
@@ -36,18 +39,17 @@ def init_db():
 
 @app.route('/health', methods=['GET'])
 def health():
-    """Health check endpoint"""
-    db_status = 'connected'
     db = get_db()
-    if not db:
-        db_status = 'disconnected'
-    
+    db_status = 'connected' if db is not None else 'disconnected'
+    status = 'healthy' if db is not None else 'unhealthy'
+
     return jsonify({
-        'status': 'healthy',
+        'status': status,
         'service': 'order-service',
         'database': db_status,
         'timestamp': datetime.utcnow().isoformat()
-    }), 200
+    }), (200 if db is not None else 503)
+
 
 @app.route('/status', methods=['GET'])
 def status():
@@ -55,7 +57,7 @@ def status():
     db = get_db()
     order_count = 0
     
-    if db:
+    if db is not None:
         try:
             order_count = db.orders.count_documents({})
         except:
@@ -74,7 +76,7 @@ def status():
 def get_orders():
     """Obtener todos los pedidos"""
     db = get_db()
-    if not db:
+    if db is None:
         return jsonify({'error': 'Database connection failed'}), 500
     
     try:
@@ -103,7 +105,7 @@ def create_order():
         }), 400
     
     db = get_db()
-    if not db:
+    if db is None:
         return jsonify({'error': 'Database connection failed'}), 500
     
     try:
@@ -134,7 +136,7 @@ def create_order():
 def get_order(order_id):
     """Obtener pedido por ID"""
     db = get_db()
-    if not db:
+    if db is None:
         return jsonify({'error': 'Database connection failed'}), 500
     
     try:
@@ -164,7 +166,7 @@ def update_order_status(order_id):
         }), 400
     
     db = get_db()
-    if not db:
+    if db is None:
         return jsonify({'error': 'Database connection failed'}), 500
     
     try:
