@@ -3,7 +3,7 @@
 ## Autor
 **Alejandro De Mendoza**  
 Ingeniero Informático - Especialista en IA  
-📧 alejandro.mendoza.techengineer@gmail.com
+alejandro.mendoza.techengineer@gmail.com
 
 ---
 
