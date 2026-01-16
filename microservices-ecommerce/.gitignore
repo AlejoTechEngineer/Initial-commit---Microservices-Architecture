@@ -1,0 +1,453 @@
+# ============================================
+# .gitignore
+# ============================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+.dockerignore
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ============================================
+# SETUP.md - Guía de Configuración
+# ============================================
+
+# 🚀 Guía de Configuración - VS Code
+
+## Autor
+**Alejandro De Mendoza**  
+alejandro.mendoza.techengineer@gmail.com
+
+---
+
+## 📋 Prerrequisitos
+
+Antes de comenzar, asegúrate de tener instalado:
+
+### Software Requerido:
+1. **Docker Desktop** (https://www.docker.com/products/docker-desktop)
+   - Windows: Docker Desktop for Windows
+   - Mac: Docker Desktop for Mac
+   - Linux: Docker Engine + Docker Compose
+
+2. **Visual Studio Code** (https://code.visualstudio.com/)
+
+3. **Git** (https://git-scm.com/)
+
+### Extensiones Recomendadas para VS Code:
+- Python (Microsoft)
+- Docker (Microsoft)
+- REST Client (Huachao Mao)
+- GitLens (GitKraken)
+
+---
+
+## 📁 Estructura del Proyecto
+
+Crea esta estructura en tu carpeta de trabajo:
+
+```
+microservices-ecommerce/
+├── api-gateway/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── app.py
+├── user-service/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── app.py
+├── order-service/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── app.py
+├── payment-service/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── app.py
+├── docs/
+│   └── ARCHITECTURE.md
+├── docker-compose.yml
+├── README.md
+├── .gitignore
+└── architecture-diagram.md
+```
+
+---
+
+## 🔧 Configuración Paso a Paso
+
+### 1. Crear el Proyecto
+
+```bash
+# Crear carpeta principal
+mkdir microservices-ecommerce
+cd microservices-ecommerce
+
+# Crear subcarpetas
+mkdir api-gateway user-service order-service payment-service docs
+
+# Abrir en VS Code
+code .
+```
+
+### 2. Crear Archivos
+
+**Para cada servicio (api-gateway, user-service, order-service, payment-service):**
+
+1. Crear `Dockerfile`
+2. Crear `requirements.txt`
+3. Crear `app.py`
+
+**En la raíz del proyecto:**
+
+1. Crear `docker-compose.yml`
+2. Crear `README.md`
+3. Crear `.gitignore`
+
+### 3. Copiar el Código
+
+Copia el contenido de cada archivo desde los artifacts proporcionados:
+
+#### api-gateway/Dockerfile
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["python", "app.py"]
+```
+
+#### api-gateway/requirements.txt
+```
+Flask==3.0.0
+requests==2.31.0
+pika==1.3.2
+```
+
+(Repetir para user-service, order-service, payment-service)
+
+---
+
+## 🚀 Ejecutar el Proyecto
+
+### Opción 1: Usando Docker Compose (Recomendado)
+
+```bash
+# Desde la carpeta raíz del proyecto
+docker-compose up --build
+```
+
+Esto levantará:
+- ✅ API Gateway (puerto 5000)
+- ✅ User Service (puerto 5001)
+- ✅ Order Service (puerto 5002)
+- ✅ Payment Service (puerto 5003)
+- ✅ PostgreSQL para Users (puerto 5432)
+- ✅ PostgreSQL para Payments (puerto 5433)
+- ✅ MongoDB (puerto 27017)
+- ✅ RabbitMQ (puertos 5672, 15672)
+
+### Opción 2: Desarrollo Local (Sin Docker)
+
+#### Requisitos adicionales:
+```bash
+# Instalar Python 3.11
+# Instalar PostgreSQL 15
+# Instalar MongoDB 7
+# Instalar RabbitMQ 3
+```
+
+#### Para cada servicio:
+```bash
+cd api-gateway
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
+
+---
+
+## 🧪 Probar los Servicios
+
+### Usando cURL:
+
+```bash
+# Health checks
+curl http://localhost:5000/health
+curl http://localhost:5001/health
+curl http://localhost:5002/health
+curl http://localhost:5003/health
+
+# Crear usuario
+curl -X POST http://localhost:5000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Alejandro", "email": "alejandro@example.com"}'
+
+# Listar usuarios
+curl http://localhost:5000/api/users
+
+# Crear pedido
+curl -X POST http://localhost:5000/api/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "items": [
+      {"product": "Laptop", "quantity": 1, "price": 1200}
+    ],
+    "total": 1200
+  }'
+
+# Crear pago
+curl -X POST http://localhost:5000/api/payments \
+  -H "Content-Type: application/json" \
+  -d '{
+    "order_id": 1,
+    "user_id": 1,
+    "amount": 1200,
+    "payment_method": "credit_card"
+  }'
+```
+
+### Usando VS Code REST Client:
+
+Crea un archivo `test.http`:
+
+```http
+### Health Check - API Gateway
+GET http://localhost:5000/health
+
+### Create User
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "name": "Alejandro De Mendoza",
+  "email": "alejandro.mendoza@example.com"
+}
+
+### Get All Users
+GET http://localhost:5000/api/users
+
+### Create Order
+POST http://localhost:5000/api/orders
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "items": [
+    {
+      "product": "Laptop Dell",
+      "quantity": 1,
+      "price": 3500000
+    }
+  ],
+  "total": 3500000
+}
+
+### Create Payment
+POST http://localhost:5000/api/payments
+Content-Type: application/json
+
+{
+  "order_id": 1,
+  "user_id": 1,
+  "amount": 3500000,
+  "payment_method": "credit_card",
+  "transaction_id": "TXN-12345"
+}
+```
+
+---
+
+## 🔍 Acceder a las Bases de Datos
+
+### PostgreSQL (Users):
+```bash
+docker exec -it postgres-users psql -U postgres -d userdb
+
+# Comandos útiles:
+\dt          # Listar tablas
+\d users     # Describir tabla users
+SELECT * FROM users;
+```
+
+### PostgreSQL (Payments):
+```bash
+docker exec -it postgres-payments psql -U postgres -d paymentdb
+
+SELECT * FROM payments;
+```
+
+### MongoDB (Orders):
+```bash
+docker exec -it mongodb mongosh
+
+use orderdb
+db.orders.find().pretty()
+```
+
+### RabbitMQ Management:
+```
+URL: http://localhost:15672
+Usuario: guest
+Password: guest
+```
+
+---
+
+## 🛑 Detener los Servicios
+
+```bash
+# Detener contenedores
+docker-compose down
+
+# Detener y eliminar volúmenes (limpieza completa)
+docker-compose down -v
+```
+
+---
+
+## 📊 Monitoreo
+
+### Ver logs en tiempo real:
+```bash
+# Todos los servicios
+docker-compose logs -f
+
+# Un servicio específico
+docker-compose logs -f user-service
+```
+
+### Ver contenedores activos:
+```bash
+docker ps
+```
+
+### Ver uso de recursos:
+```bash
+docker stats
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Problema: Puerto ya en uso
+```bash
+# Encontrar proceso usando el puerto
+# Windows
+netstat -ano | findstr :5000
+
+# Mac/Linux
+lsof -i :5000
+
+# Matar proceso
+kill -9 <PID>
+```
+
+### Problema: Base de datos no conecta
+```bash
+# Verificar que los contenedores estén corriendo
+docker ps
+
+# Reiniciar un servicio específico
+docker-compose restart user-service
+```
+
+### Problema: Cambios en código no se reflejan
+```bash
+# Rebuild de un servicio específico
+docker-compose up --build user-service
+
+# Rebuild completo
+docker-compose up --build
+```
+
+---
+
+## 📚 Recursos Adicionales
+
+- [Documentación de Flask](https://flask.palletsprojects.com/)
+- [Docker Compose Documentation](https://docs.docker.com/compose/)
+- [PostgreSQL Tutorial](https://www.postgresql.org/docs/)
+- [MongoDB Manual](https://www.mongodb.com/docs/)
+
+---
+
+## 🤝 Soporte
+
+**Alejandro De Mendoza**  
+📧 alejandro.mendoza.techengineer@gmail.com  
+📱 +57 311 2687118
+
+---
+
+## ✅ Checklist de Configuración
+
+- [ ] Docker Desktop instalado y corriendo
+- [ ] VS Code instalado
+- [ ] Proyecto clonado/creado
+- [ ] Todos los archivos copiados
+- [ ] `docker-compose up --build` ejecutado exitosamente
+- [ ] Health checks pasando
+- [ ] Pruebas de API funcionando
+- [ ] Bases de datos accesibles
+
+**¡Listo para desarrollar! 🚀**
