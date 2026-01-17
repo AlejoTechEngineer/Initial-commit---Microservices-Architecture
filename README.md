@@ -1,3 +1,11 @@
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Docker Hub](https://img.shields.io/badge/Docker%20Hub-alejotecheng-blue?style=for-the-badge&logo=docker)
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![Flask](https://img.shields.io/badge/Flask-3.0-green?style=for-the-badge&logo=flask)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql)
+![MongoDB](https://img.shields.io/badge/MongoDB-7-green?style=for-the-badge&logo=mongodb)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)
+
 # 🏗️ Arquitectura de Microservicios - Sistema de Gestión de Pedidos
 
 ## 👨‍💻 Autor
@@ -609,6 +617,17 @@ microservices-ecommerce/
 - [MongoDB Manual](https://www.mongodb.com/docs/)
 - [RabbitMQ Tutorials](https://www.rabbitmq.com/tutorials/)
 
+## 🐳 Imágenes Docker Públicas
+
+Las imágenes de este proyecto están disponibles en Docker Hub:
+```bash
+docker pull alejotecheng/api-gateway:1.0
+docker pull alejotecheng/user-service:1.0
+docker pull alejotecheng/order-service:1.0
+docker pull alejotecheng/payment-service:1.0
+```
+
+**Docker Hub**: https://hub.docker.com/u/alejotecheng
 ---
 
 ## 🎯 Criterios Técnicos Aplicados
