@@ -66,7 +66,7 @@ htmlcov/
 # SETUP.md - Guía de Configuración
 # ============================================
 
-# 🚀 Guía de Configuración - VS Code
+# Guía de Configuración - VS Code
 
 ## Autor
 **Alejandro De Mendoza**  
@@ -74,7 +74,7 @@ alejandro.mendoza.techengineer@gmail.com
 
 ---
 
-## 📋 Prerrequisitos
+## Prerrequisitos
 
 Antes de comenzar, asegúrate de tener instalado:
 
@@ -96,7 +96,7 @@ Antes de comenzar, asegúrate de tener instalado:
 
 ---
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 Crea esta estructura en tu carpeta de trabajo:
 
@@ -128,7 +128,7 @@ microservices-ecommerce/
 
 ---
 
-## 🔧 Configuración Paso a Paso
+## Configuración Paso a Paso
 
 ### 1. Crear el Proyecto
 

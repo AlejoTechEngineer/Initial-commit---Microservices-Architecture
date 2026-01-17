@@ -1,22 +1,22 @@
-# 🏗️ Arquitectura de Microservicios - Sistema de Gestión de Pedidos
+# Arquitectura de Microservicios - Sistema de Gestión de Pedidos
 
-## 👨‍💻 Autor
+## Autor
 **Alejandro De Mendoza**  
 Ingeniero Informático - Especialista en Inteligencia Artificial  
-📧 alejandro.mendoza.techengineer@gmail.com  
-📱 +57 311 2687118  
-📍 Bogotá, Colombia
+alejandro.mendoza.techengineer@gmail.com  
++57 311 2687118  
+Bogotá, Colombia
 
 ---
 
-## 📋 Descripción del Proyecto
+## Descripción del Proyecto
 
 Sistema de gestión de pedidos en línea basado en arquitectura de microservicios, desarrollado como solución a la migración de una aplicación monolítica. El proyecto implementa mejoras en:
 
-- ✅ **Disponibilidad**: Health checks y monitoreo en cada servicio
-- ✅ **Escalabilidad**: Contenedores independientes y bases de datos especializadas
-- ✅ **Facilidad de modificación**: Separación de responsabilidades (SOC)
-- ✅ **Tolerancia a fallos**: Desacoplamiento y comunicación asíncrona
+- **Disponibilidad**: Health checks y monitoreo en cada servicio
+- **Escalabilidad**: Contenedores independientes y bases de datos especializadas
+- **Facilidad de modificación**: Separación de responsabilidades (SOC)
+- **Tolerancia a fallos**: Desacoplamiento y comunicación asíncrona
 
 ### Componentes Principales:
 
@@ -27,7 +27,7 @@ Sistema de gestión de pedidos en línea basado en arquitectura de microservicio
 
 ---
 
-## 🏛️ Arquitectura
+## Arquitectura
 
 ### Diagrama de Arquitectura
 
@@ -127,7 +127,7 @@ Sistema de gestión de pedidos en línea basado en arquitectura de microservicio
 
 ---
 
-## 🗄️ Bases de Datos
+## Bases de Datos
 
 ### Estrategia: Database per Service Pattern
 
@@ -145,16 +145,16 @@ Sistema de gestión de pedidos en línea basado en arquitectura de microservicio
 
 ---
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ### Prerrequisitos:
 
 #### Software Requerido:
 ```bash
-✅ Docker Desktop instalado y corriendo
-✅ Docker Compose (incluido en Docker Desktop)
-✅ Git
-✅ VS Code (opcional pero recomendado)
+* Docker Desktop instalado y corriendo
+* Docker Compose (incluido en Docker Desktop)
+* Git
+* VS Code (opcional pero recomendado)
 ```
 
 #### Verificar instalación:
@@ -187,16 +187,16 @@ docker-compose up --build
 docker-compose up -d --build
 ```
 
-**⏳ Tiempo estimado**: 2-3 minutos en primera ejecución
+**Tiempo estimado**: 2-3 minutos en primera ejecución
 
 #### 3. **Verificar que todo funciona:**
 
 ```bash
 # Health checks de cada servicio
-curl http://localhost:5000/health  # API Gateway ✅
-curl http://localhost:5001/health  # User Service ✅
-curl http://localhost:5002/health  # Order Service ✅
-curl http://localhost:5003/health  # Payment Service ✅
+curl http://localhost:5000/health  # API Gateway 
+curl http://localhost:5001/health  # User Service 
+curl http://localhost:5002/health  # Order Service 
+curl http://localhost:5003/health  # Payment Service 
 ```
 
 **Respuesta esperada:**
@@ -226,7 +226,7 @@ docker ps
 
 ---
 
-## 🧪 Pruebas de APIs
+## Pruebas de APIs
 
 ### User Service - Gestión de Usuarios
 
@@ -264,8 +264,6 @@ curl http://localhost:5000/api/users
 ```bash
 curl http://localhost:5001/status
 ```
-
----
 
 ### Order Service - Gestión de Pedidos
 
@@ -323,9 +321,6 @@ curl -X PUT http://localhost:5002/orders/<order_id>/status \
 ```bash
 curl http://localhost:5002/status
 ```
-
----
-
 ### Payment Service - Gestión de Pagos
 
 #### Crear pago:
@@ -377,9 +372,7 @@ curl -X PUT http://localhost:5003/payments/<payment_id>/status \
 curl http://localhost:5003/status
 ```
 
----
-
-## 📊 Monitoreo y Acceso a Datos
+## Monitoreo y Acceso a Datos
 
 ### Acceso a Bases de Datos:
 
@@ -421,9 +414,9 @@ exit
 
 #### RabbitMQ Management UI:
 ```
-🌐 URL: http://localhost:15672
-👤 Usuario: guest
-🔑 Password: guest
+URL: http://localhost:15672
+Usuario: guest
+Password: guest
 
 Funciones disponibles:
 • Ver colas de mensajes
@@ -460,10 +453,7 @@ docker stats
 # Información detallada de un contenedor
 docker inspect user-service
 ```
-
----
-
-## 🛑 Detener y Limpiar Servicios
+## Detener y Limpiar Servicios
 
 ### Detener servicios:
 ```bash
@@ -498,9 +488,7 @@ docker-compose restart
 docker-compose up --build --force-recreate
 ```
 
----
-
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 microservices-ecommerce/
@@ -550,7 +538,7 @@ microservices-ecommerce/
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 ### Backend:
 | Tecnología | Versión | Uso |
@@ -579,7 +567,7 @@ microservices-ecommerce/
 
 ---
 
-## 📚 Documentación Adicional
+## Documentación Adicional
 
 ### Documentos Técnicos:
 
@@ -611,59 +599,94 @@ microservices-ecommerce/
 
 ---
 
-## 🎯 Criterios Técnicos Aplicados
+## Criterios Técnicos Aplicados
 
 ### 1. **Database per Service Pattern**
-- ✅ Cada microservicio gestiona su propia base de datos
-- ✅ Sin dependencias directas de BD entre servicios
-- ✅ Permite evolución independiente de esquemas
-- ✅ Evita acoplamiento por datos compartidos
+- Cada microservicio gestiona su propia base de datos
+- Sin dependencias directas de BD entre servicios
+- Permite evolución independiente de esquemas
+- Evita acoplamiento por datos compartidos
 
 ### 2. **API Gateway Pattern**
-- ✅ Punto de entrada centralizado
-- ✅ Simplifica consumo para clientes
-- ✅ Implementa cross-cutting concerns (auth, rate limiting)
-- ✅ Enrutamiento inteligente a microservicios
+- Punto de entrada centralizado
+- Simplifica consumo para clientes
+- Implementa cross-cutting concerns (auth, rate limiting)
+- Enrutamiento inteligente a microservicios
 
 ### 3. **Event-Driven Architecture**
-- ✅ Comunicación asíncrona con RabbitMQ
-- ✅ Desacoplamiento temporal entre servicios
-- ✅ Garantía de entrega de eventos
-- ✅ Tolerancia a fallos mejorada
+- Comunicación asíncrona con RabbitMQ
+- Desacoplamiento temporal entre servicios
+- Garantía de entrega de eventos
+- Tolerancia a fallos mejorada
 
 ### 4. **Health Checks**
-- ✅ Endpoints `/health` y `/status` en cada servicio
-- ✅ Monitoreo de disponibilidad
-- ✅ Integración con orquestadores (Kubernetes)
-- ✅ Alertas automáticas de fallos
+- Endpoints `/health` y `/status` en cada servicio
+- Monitoreo de disponibilidad
+- Integración con orquestadores (Kubernetes)
+- Alertas automáticas de fallos
 
 ### 5. **Containerización**
-- ✅ Despliegue consistente con Docker
-- ✅ Portabilidad entre entornos
-- ✅ Aislamiento de procesos
-- ✅ Escalabilidad horizontal
+- Despliegue consistente con Docker
+- Portabilidad entre entornos
+- Aislamiento de procesos
+- Escalabilidad horizontal
 
 ### 6. **Separation of Concerns**
-- ✅ Cada servicio con responsabilidad única
-- ✅ Alta cohesión, bajo acoplamiento
-- ✅ Facilita mantenimiento
-- ✅ Desarrollo paralelo por equipos
+- Cada servicio con responsabilidad única
+- Alta cohesión, bajo acoplamiento
+- Facilita mantenimiento
+- Desarrollo paralelo por equipos
 
 ---
 
-## 📝 Notas Importantes
+## Imágenes Docker - Docker Hub
+
+Las imágenes han sido publicadas exitosamente en Docker Hub para distribución pública.
+
+**Repositorios públicos:**
+- [`alejotecheng/api-gateway:1.0`](https://hub.docker.com/r/alejotecheng/api-gateway)
+- [`alejotecheng/user-service:1.0`](https://hub.docker.com/r/alejotecheng/user-service)
+- [`alejotecheng/order-service:1.0`](https://hub.docker.com/r/alejotecheng/order-service)
+- [`alejotecheng/payment-service:1.0`](https://hub.docker.com/r/alejotecheng/payment-service)
+
+![Docker Images Tagged](./screenshots/23_docker_tag.png)
+
+![Docker Hub Repositories](./screenshots/25_dockerhub_repositories.png)
+
+**Comandos para descargar las imágenes:**
+```bash
+# Descargar todas las imágenes
+docker pull alejotecheng/api-gateway:1.0
+docker pull alejotecheng/user-service:1.0
+docker pull alejotecheng/order-service:1.0
+docker pull alejotecheng/payment-service:1.0
+
+# Ejecutar con docker-compose (alternativo)
+# Las imágenes se descargarán automáticamente desde Docker Hub
+docker-compose up
+```
+
+**Ventajas de las imágenes públicas:**
+- Fácil distribución y despliegue
+- Versionado claro (tag 1.0)
+- Disponibles para cualquier entorno Docker
+- Portfolio público demostrable
+
+---
+
+## Notas Importantes
 
 ### Sobre el Proyecto:
-- ⚠️ Este es un proyecto de demostración / prueba técnica
-- ⚠️ Implementación básica sin lógica de negocio completa
-- ⚠️ No incluye autenticación JWT (implementación básica)
-- ⚠️ No incluye tests unitarios / integración (recomendado para producción)
+- Este es un proyecto de demostración / prueba técnica
+- Implementación básica sin lógica de negocio completa
+- No incluye autenticación JWT (implementación básica)
+- No incluye tests unitarios / integración (recomendado para producción)
 
 ### Configuración por Defecto:
-- 🔓 RabbitMQ configurado con usuario `guest/guest` (solo desarrollo)
-- 🔓 PostgreSQL con usuario `postgres/postgres` (cambiar en producción)
-- 🔓 MongoDB sin autenticación (habilitar en producción)
-- ⚙️ Flask en modo `debug=True` (desactivar en producción)
+- RabbitMQ configurado con usuario `guest/guest` (solo desarrollo)
+- PostgreSQL con usuario `postgres/postgres` (cambiar en producción)
+- MongoDB sin autenticación (habilitar en producción)
+- Flask en modo `debug=True` (desactivar en producción)
 
 ### Mejoras Recomendadas para Producción:
 - [ ] Implementar autenticación JWT
@@ -679,7 +702,7 @@ microservices-ecommerce/
 
 ---
 
-## 🐛 Troubleshooting (Solución de Problemas)
+## Troubleshooting (Solución de Problemas)
 
 ### Problema: Puerto ya en uso
 ```bash
@@ -740,9 +763,9 @@ docker volume prune
 
 ---
 
-## 🚀 Roadmap de Desarrollo
+## Roadmap de Desarrollo
 
-### ✅ Fase 1: MVP (Completado)
+### Fase 1: MVP (Completado)
 - [x] Arquitectura de microservicios básica
 - [x] APIs REST funcionales
 - [x] Dockerización completa
@@ -750,7 +773,7 @@ docker volume prune
 - [x] Comunicación REST entre servicios
 - [x] Bases de datos configuradas
 
-### 🔄 Fase 2: Mejoras (En progreso)
+### Fase 2: Mejoras (En progreso)
 - [ ] Frontend React completo (Login + Dashboard)
 - [ ] Implementar eventos RabbitMQ
 - [ ] Agregar autenticación JWT
@@ -758,7 +781,7 @@ docker volume prune
 - [ ] Agregar cache con Redis
 - [ ] API versioning (v1, v2)
 
-### 📋 Fase 3: Producción (Planeado)
+### Fase 3: Producción (Planeado)
 - [ ] Tests unitarios (pytest)
 - [ ] Tests de integración
 - [ ] CI/CD con GitHub Actions
@@ -770,7 +793,7 @@ docker volume prune
 
 ---
 
-## 🤝 Contribución
+## Contribución
 
 Este proyecto fue desarrollado como prueba técnica individual. Para sugerencias o mejoras:
 
@@ -782,26 +805,26 @@ Este proyecto fue desarrollado como prueba técnica individual. Para sugerencias
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto fue desarrollado como prueba técnica para la posición de **Desarrollador Fullstack**.
 
 ---
 
-## 📞 Contacto
+## Contacto
 
 **Alejandro De Mendoza**  
 Ingeniero Informático | Especialista en Inteligencia Artificial
 
-📧 **Email**: alejandro.mendoza.techengineer@gmail.com  
-📱 **Teléfono**: +57 311 2687118  
-📍 **Ubicación**: Bogotá, Colombia  
-💼 **LinkedIn**: [linkedin.com/in/alejandromenoza](#)  
-🐙 **GitHub**: [github.com/alejandromenoza](#)
+**Email**: alejandro.mendoza.techengineer@gmail.com  
+**Teléfono**: +57 311 2687118  
+**Ubicación**: Bogotá, Colombia  
+**LinkedIn**: [linkedin.com/in/alejandromenoza](#)  
+**GitHub**: [github.com/alejandromenoza](#)
 
 ---
 
-## ⭐ Agradecimientos
+## Agradecimientos
 
 Desarrollado con dedicación para demostrar capacidades en:
 - Arquitectura de microservicios
@@ -811,10 +834,10 @@ Desarrollado con dedicación para demostrar capacidades en:
 - Diseño de APIs REST
 - Event-driven architecture
 
-**¡Gracias por revisar este proyecto!** 🚀
+**¡Gracias por revisar este proyecto!**
 
 ---
 
 **Última actualización**: 16 de Enero de 2026  
 **Versión**: 1.0.0  
-**Estado**: ✅ Completado y funcional
+**Estado**: Completado y funcional

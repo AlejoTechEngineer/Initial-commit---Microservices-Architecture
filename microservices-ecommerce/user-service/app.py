@@ -36,9 +36,9 @@ def init_db():
             conn.commit()
             cur.close()
             conn.close()
-            print("✅ User table initialized successfully")
+            print("User table initialized successfully")
         except Exception as e:
-            print(f"❌ Error initializing database: {e}")
+            print(f"Error initializing database: {e}")
 
 @app.route('/health', methods=['GET'])
 def health():
